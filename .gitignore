@@ -1,0 +1,25 @@
+# Compiled objects and executables
+*.o
+*.obj
+*.elf
+*.hex
+*.bin
+*.axf
+*.map
+
+# Debug outputs
+*.log
+*.bak
+*.tmp
+
+# IDE-generated files
+*.uvguix.*
+*.uvoptx
+*.uvprojx.user
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
