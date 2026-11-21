@@ -8,30 +8,6 @@ An embedded **Automated Teller Machine (ATM) Controller** built on the **LPC2148
 
 ![image alt](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/7170e27075920dbfda8938336832c2e8116c6a90/docs/ATM_BLOCK_DIAGRAM.png)
 
-### How Data & Control Move Through the System
-+-----------------------------------------------------------------------+
-|                       LPC2148 Microcontroller                         |
-|                                                                       |
-|  +-----------------+   +-----------------+   +--------------------+   |
-|  |   ATM Core      |   |   RTC & EINT3   |   |   UART0 Logger     |   |
-|  |   (atm.c/h)     |   |   (intrrupt.c/h,|   |   (uart.c/h,       |   |
-|  |                 |   |    rtc.h)       |   |    uart_defines.h) |   |
-|  +--------+--------+   +--------+--------+   +---------+----------+   |
-|           |                     |                      |              |
-+-----------|---------------------|----------------------|--------------+
-            |                     |                      |
-     +------+------+         +----+-----+           +----+-----+
-     |             |         |  EINT3   |           |  UART0   |
-     v             v         | (P0.20)  |           | (TXD0/   |
-+---------+   +---------+    |  IRQ     |           |  RXD0)   |
-| 16x2    |   | 4x4 KPM |    +----+-----+           +----+-----+
-| LCD     |   | (Port1) |         |                       |
-| (Port0) |   +---------+         v                       v
-+---------+                 [ RTC Setup ]         [ Serial Terminal ]
-     |                      [ Time/Date ]         [ Timestamps & Logs]
-     v
-[ Buzzer (P0.5) ]  <-- 3 failed login attempts or low-balance alert
-
 ## 2. ATM & RTC Workflow at a Glance
 
 ![image alt](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0afb5c28dc464b4dea5937c6cabd1b75831ebef4/docs/ATM_WORK_FLOW.png)
