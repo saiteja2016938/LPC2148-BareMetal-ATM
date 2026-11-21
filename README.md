@@ -71,6 +71,8 @@ An embedded **Automated Teller Machine (ATM) Controller** built on the **LPC2148
 | `'B'` | — | Next (newer) transaction[cite: 16] | — |
 | `'D'` | Cancel entry (`INPUT_CANCEL`)[cite: 16] | Exit history viewer[cite: 16] | — |
 
+
+![image alt](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/9e21b25da4c1d8629f29ee1f6da7f4ecec767447/docs/assets/kpm_imag_1.png)
 ---
 
 ## 5. Project File & Module Guide
