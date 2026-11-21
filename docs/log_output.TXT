@@ -1,0 +1,50 @@
+
+================================================
+ LPC2148 ATM SYSTEM
+ TRANSACTION LOG
+================================================
+27/10/2026 16:30:13  | ACCOUNT : 1001 | LOGIN SUCCESS
+
+27/10/2026 16:30:19  | BALANCE ENQUIRY
+ ACCOUNT : 1001
+ AVAILABLE BALANCE : Rs.25000
+----------------------------------------
+
+27/10/2026 16:30:29  | CASH WITHDRAWAL
+ ACCOUNT : 1001
+ AMOUNT : Rs.500
+ REMAINING BALANCE : Rs.24500
+----------------------------------------
+
+27/10/2026 16:30:46  | CASH DEPOSIT
+ ACCOUNT : 1001
+ AMOUNT : Rs.1000
+ UPDATED BALANCE : Rs.25500
+----------------------------------------
+27/10/2026 16:30:58  | ACCOUNT : 1001 | PIN CHANGED
+
+27/10/2026 16:31:11  | BALANCE ENQUIRY
+ ACCOUNT : 1001
+ AVAILABLE BALANCE : Rs.25500
+----------------------------------------
+
+27/10/2026 16:31:36  | CASH WITHDRAWAL
+ ACCOUNT : 1001
+ AMOUNT : Rs.2000
+ REMAINING BALANCE : Rs.23500
+----------------------------------------
+
+27/10/2026 16:31:48  | CASH DEPOSIT
+ ACCOUNT : 1001
+ AMOUNT : Rs.4000
+ UPDATED BALANCE : Rs.27500
+----------------------------------------
+
+27/10/2026 16:31:58  | BALANCE ENQUIRY
+ ACCOUNT : 1001
+ AVAILABLE BALANCE : Rs.27500
+----------------------------------------
+27/10/2026 16:32:13  | ACCOUNT : 1001 | LOGOUT
+----------------------------------------
+ SESSION COMPLETED
+================================================
