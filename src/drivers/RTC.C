@@ -1,53 +1,54 @@
-#include <LPC21xx.h>
-#include "RTC_defines.h"
-#include "types.h"
-#include "rtc.h"
-
-u32 rsec, rmin, rhrs;
-u32 rdate, rmonth, ryear;
-
-void InitRTC(void)
-{
-    /* Stop the RTC counter while configuring it */
-    CCR = 0;
-
-    /* Prescaler values for a 15 MHz RTC clock source.
-       Confirm these values against your board clock configuration. */
-    PREINT  = 0x000001C8;
-    PREFRAC = 0x000061C0;
-
-    /* Clear pending RTC interrupt flags */
-    ILR = (1 << ILR_BIT_RTCCIF) |
-          (1 << ILR_BIT_RTCALF);
-
-    /* Start RTC */
-    CCR = (1 << CCR_BIT_CLKEN);
-}
-
-void RTC_SET_TIME(u32 sec, u32 min, u32 hrs)
-{
-    SEC  = sec;
-    MIN  = min;
-    HOUR = hrs;
-}
-
-void RTC_SET_DATE(u32 date, u32 month, u32 year)
-{
-    DOM   = date;
-    MONTH = month;
-    YEAR  = year;
-}
-
-void RTC_READ_TIME(void)
-{
-    rsec = SEC;
-    rmin = MIN;
-    rhrs = HOUR;
-}
-
-void RTC_READ_DATE(void)
-{
-    rdate  = DOM;
-    rmonth = MONTH;
-    ryear  = YEAR;
-}
+#include <LPC21xx.h>                                                // Include LPC21xx microcontroller SFR and RTC register definitions[cite: 22]
+#include "RTC_defines.h"                                            // Include RTC bit position definitions (CCR_BIT_CLKEN, ILR_BIT_*, etc.)[cite: 22]
+#include "types.h"                                                  // Include custom fixed-width integer type definitions (u32, etc.)[cite: 22]
+#include "rtc.h"                                                    // Include RTC global variable declarations and function prototypes[cite: 22]
+                                                                    // Blank line separating include directives from global variables[cite: 22]
+u32 rsec, rmin, rhrs;                                               // Global variables storing read RTC seconds, minutes, and hours[cite: 22]
+u32 rdate, rmonth, ryear;                                           // Global variables storing read RTC day of month, month, and year[cite: 22]
+                                                                    // Blank line separating global variables from InitRTC[cite: 22]
+void InitRTC(void)                                                  // Define initialization function for the LPC21xx Real-Time Clock[cite: 22]
+{                                                                   // Opening brace for InitRTC function body[cite: 22]
+    /* Stop the RTC counter while configuring it */                 // Comment explaining RTC clock is disabled during setup[cite: 22]
+    CCR = 0;                                                        // Clear Clock Control Register (CCR) to halt RTC counters[cite: 22]
+                                                                    // Blank line before prescaler configuration[cite: 22]
+    /* Prescaler values for a 15 MHz RTC clock source.              // Comment noting prescaler values target a 15 MHz clock source[cite: 22]
+       Confirm these values against your board clock configuration. */ // Continuation comment advising verification with hardware clock[cite: 22]
+    PREINT  = 0x000001C8;                                           // Load integer prescaler register (PREINT) with 0x1C8 (456)[cite: 22]
+    PREFRAC = 0x000061C0;                                           // Load fractional prescaler register (PREFRAC) with 0x61C0 (25024)[cite: 22]
+                                                                    // Blank line before clearing RTC interrupt flags[cite: 22]
+    /* Clear pending RTC interrupt flags */                         // Comment explaining clearing counter and alarm interrupt flags[cite: 22]
+    ILR = (1 << ILR_BIT_RTCCIF) |                                   // Set counter increment interrupt flag bit in ILR to clear it[cite: 22]
+          (1 << ILR_BIT_RTCALF);                                    // Set alarm interrupt flag bit in ILR to clear it[cite: 22]
+                                                                    // Blank line before enabling RTC clock[cite: 22]
+    /* Start RTC */                                                 // Comment noting RTC counter start step[cite: 22]
+    CCR = (1 << CCR_BIT_CLKEN);                                     // Set clock enable bit in CCR to start RTC counting[cite: 22]
+}                                                                   // Closing brace for InitRTC function body[cite: 22]
+                                                                    // Blank line separating InitRTC and RTC_SET_TIME[cite: 22]
+void RTC_SET_TIME(u32 sec, u32 min, u32 hrs)                        // Define function to set RTC time registers (seconds, minutes, hours)[cite: 22]
+{                                                                   // Opening brace for RTC_SET_TIME function body[cite: 22]
+    SEC  = sec;                                                     // Write sec value into RTC Seconds register (SEC)[cite: 22]
+    MIN  = min;                                                     // Write min value into RTC Minutes register (MIN)[cite: 22]
+    HOUR = hrs;                                                     // Write hrs value into RTC Hours register (HOUR)[cite: 22]
+}                                                                   // Closing brace for RTC_SET_TIME function body[cite: 22]
+                                                                    // Blank line separating RTC_SET_TIME and RTC_SET_DATE[cite: 22]
+void RTC_SET_DATE(u32 date, u32 month, u32 year)                    // Define function to set RTC calendar registers (day, month, year)[cite: 22]
+{                                                                   // Opening brace for RTC_SET_DATE function body[cite: 22]
+    DOM   = date;                                                   // Write date value into RTC Day of Month register (DOM)[cite: 22]
+    MONTH = month;                                                  // Write month value into RTC Month register (MONTH)[cite: 22]
+    YEAR  = year;                                                   // Write year value into RTC Year register (YEAR)[cite: 22]
+}                                                                   // Closing brace for RTC_SET_DATE function body[cite: 22]
+                                                                    // Blank line separating RTC_SET_DATE and RTC_READ_TIME[cite: 22]
+void RTC_READ_TIME(void)                                            // Define function to read current time from RTC registers into globals[cite: 22]
+{                                                                   // Opening brace for RTC_READ_TIME function body[cite: 22]
+    rsec = SEC;                                                     // Read RTC Seconds register (SEC) into global rsec[cite: 22]
+    rmin = MIN;                                                     // Read RTC Minutes register (MIN) into global rmin[cite: 22]
+    rhrs = HOUR;                                                    // Read RTC Hours register (HOUR) into global rhrs[cite: 22]
+}                                                                   // Closing brace for RTC_READ_TIME function body[cite: 22]
+                                                                    // Blank line separating RTC_READ_TIME and RTC_READ_DATE[cite: 22]
+void RTC_READ_DATE(void)                                            // Define function to read current date from RTC registers into globals[cite: 22]
+{                                                                   // Opening brace for RTC_READ_DATE function body[cite: 22]
+    rdate  = DOM;                                                   // Read RTC Day of Month register (DOM) into global rdate[cite: 22]
+    rmonth = MONTH;                                                 // Read RTC Month register (MONTH) into global rmonth[cite: 22]
+    ryear  = YEAR;                                                  // Read RTC Year register (YEAR) into global ryear[cite: 22]
+}                                                                   // Closing brace for RTC_READ_DATE function body[cite: 22]
+                                                                    // Trailing newline at end of source file[cite: 22]
