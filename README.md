@@ -96,11 +96,10 @@ An embedded **Automated Teller Machine (ATM) Controller** built on the **LPC2148
 
 ### 1. Hardware Setup & Multi-Angle Views
 
-| Complete & Overview | Front / Keypad View | Top View | Side & Right Views |
-| :---: | :---: | :---: | :---: |
-| ![Complete Hardware](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/compleate_hardware.jpeg)<br>*Full ATM hardware assembly* | ![Hardware View with Keypad](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/hardware_view_with_kpm.jpeg)<br>*Board integrated with 4x4 keypad* | ![Hardware Top View](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/hardware_top_view.jpeg)<br>*Top view of wiring & connections* | ![Hardware Side View](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/hardware_side_view.jpeg)<br>*Side view of hardware setup* |
-| ![Hardware Image](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/hardware_img.jpeg)<br>*LPC2148 board & peripherals* | — | — | ![Hardware Right Side View](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/hardware_right_side_view.jpeg)<br>*Right-side view of hardware setup* |
-
+| Complete & Overview | Front / Keypad & Top View | Side & Right Views |
+| :---: | :---: | :---: |
+| ![Complete Hardware](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/compleate_hardware.jpeg)<br>*Full ATM hardware assembly* | ![Hardware View with Keypad](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/hardware_view_with_kpm.jpeg)<br>*Board integrated with 4x4 keypad* | ![Hardware Side View](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/hardware_side_view.jpeg)<br>*Side view of hardware setup* |
+| ![Hardware Image](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/hardware_img.jpeg)<br>*LPC2148 board & peripherals* | ![Hardware Top View](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/hardware_top_view.jpeg)<br>*Top view of wiring & connections* | ![Hardware Right Side View](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/hardware_right_side_view.jpeg)<br>*Right-side view of hardware setup* |
 ---
 
 ### 2. LCD Screen & Transaction Flow
