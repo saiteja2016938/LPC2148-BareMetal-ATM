@@ -6,7 +6,7 @@ An embedded **Automated Teller Machine (ATM) Controller** built on the **LPC2148
 
 ## 1. Visual System Architecture
 
-<Image src="[image_generation_content/154145195735805473" alt="LPC2148 ATM System Hardware Block Diagram](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/7170e27075920dbfda8938336832c2e8116c6a90/docs/ATM_BLOCK_DIAGRAM.png)" />
+![image alt](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/7170e27075920dbfda8938336832c2e8116c6a90/docs/ATM_BLOCK_DIAGRAM.png)
 
 ### How Data & Control Move Through the System
 
