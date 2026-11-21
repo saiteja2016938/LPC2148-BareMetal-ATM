@@ -1,27 +1,28 @@
-//lcd_defines.h
-//HD44780 Commands 
-#define CLEAR_LCD            0x01 
-#define RET_CUR_HOME         0x02 
-#define SHIFT_CUR_RIGHT      0x06 
-#define SHIFT_CUR_LEFT       0x07 
-#define DSP_OFF              0x08 
-#define DSP_ON_CUR_OFF       0x0c 
-#define DSP_ON_CUR_ON        0x0E 
-#define DSP_ON_CUR_BLINK     0x0F 
-#define SHIFT_DISP_LEFT      0x10 
-#define SHIFT_DISP_RIGHT     0x14 
-#define MODE_8BIT_1LINE      0x30 
-#define MODE_4BIT_1LINE      0x20 
-#define MODE_8BIT_2LINE      0x38 
-#define MODE_4BIT_2LINE      0x28 
-#define GOTO_LINE1_POS0      0x80 
-#define GOTO_LINE2_POS0      0xC0 
-#define GOTO_LINE3_POS0      0x94 
-#define GOTO_LINE4_POS0      0xD4 
-#define GOTO_CGRAM_START     0x40
-
-//lcd connection pins
-#define LCD_DATA 8//@p0.8 to p0.15
-#define LCD_RS   16//@p0.16
-#define LCD_RW   18//@p0.18
-#define LCD_EN   17//@p0.17
+//lcd_defines.h                                       // Header file name comment for HD44780 LCD definitions[cite: 6]
+//HD44780 Commands                                    // Section comment for HD44780 LCD controller command macros[cite: 6]
+#define CLEAR_LCD            0x01                     // Command 0x01: Clear display and reset cursor to home[cite: 6]
+#define RET_CUR_HOME         0x02                     // Command 0x02: Return cursor to home position (0,0) without clearing DDRAM[cite: 6]
+#define SHIFT_CUR_RIGHT      0x06                     // Command 0x06: Entry mode set - increment cursor position right after write[cite: 6]
+#define SHIFT_CUR_LEFT       0x07                     // Command 0x07: Entry mode set - decrement cursor position left after write[cite: 6]
+#define DSP_OFF              0x08                     // Command 0x08: Turn display off, cursor off, and blink off[cite: 6]
+#define DSP_ON_CUR_OFF       0x0c                     // Command 0x0C: Turn display on with cursor off[cite: 6]
+#define DSP_ON_CUR_ON        0x0E                     // Command 0x0E: Turn display on with steady cursor visible[cite: 6]
+#define DSP_ON_CUR_BLINK     0x0F                     // Command 0x0F: Turn display on with blinking cursor[cite: 6]
+#define SHIFT_DISP_LEFT      0x10                     // Command 0x10: Shift entire display left without changing DDRAM content[cite: 6]
+#define SHIFT_DISP_RIGHT     0x14                     // Command 0x14: Shift entire display right without changing DDRAM content[cite: 6]
+#define MODE_8BIT_1LINE      0x30                     // Command 0x30: Function set - 8-bit interface, 1 display line, 5x8 font[cite: 6]
+#define MODE_4BIT_1LINE      0x20                     // Command 0x20: Function set - 4-bit interface, 1 display line, 5x8 font[cite: 6]
+#define MODE_8BIT_2LINE      0x38                     // Command 0x38: Function set - 8-bit interface, 2 display lines, 5x8 font[cite: 6]
+#define MODE_4BIT_2LINE      0x28                     // Command 0x28: Function set - 4-bit interface, 2 display lines, 5x8 font[cite: 6]
+#define GOTO_LINE1_POS0      0x80                     // Command 0x80: Set DDRAM address to line 1, column 0[cite: 6]
+#define GOTO_LINE2_POS0      0xC0                     // Command 0xC0: Set DDRAM address to line 2, column 0[cite: 6]
+#define GOTO_LINE3_POS0      0x94                     // Command 0x94: Set DDRAM address to line 3, column 0[cite: 6]
+#define GOTO_LINE4_POS0      0xD4                     // Command 0xD4: Set DDRAM address to line 4, column 0[cite: 6]
+#define GOTO_CGRAM_START     0x40                     // Command 0x40: Set CGRAM address to start (0x00) for custom characters[cite: 6]
+                                                      // Blank line separating command macros from pin definitions[cite: 6]
+//lcd connection pins                                 // Section comment for LCD hardware pin connections[cite: 6]
+#define LCD_DATA 8//@p0.8 to p0.15                     // Define LCD data base pin 8 (Port 0 pins P0.8 through P0.15)[cite: 6]
+#define LCD_RS   16//@p0.16                          // Define LCD Register Select (RS) pin as 16 (Port 0 Pin P0.16)[cite: 6]
+#define LCD_RW   18//@p0.18                          // Define LCD Read/Write (RW) pin as 18 (Port 0 Pin P0.18)[cite: 6]
+#define LCD_EN   17//@p0.17                          // Define LCD Enable (EN) pin as 17 (Port 0 Pin P0.17)[cite: 6]
+                                                      // Trailing newline at end of header file[cite: 6]

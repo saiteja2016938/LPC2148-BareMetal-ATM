@@ -1,11 +1,12 @@
-// types.h
-
-typedef unsigned char u8;
-typedef signed char s8;
-typedef unsigned short u16;
-typedef short s16;
-typedef unsigned int u32;
-typedef int s32;
-typedef float f32;
-typedef double s64;
-
+// types.h                                            // Header file name comment for portable primitive type definitions[cite: 9]
+                                                      // Blank line after file header comment[cite: 9]
+typedef unsigned char u8;                             // Define u8 as an 8-bit unsigned integer type[cite: 9]
+typedef signed char s8;                               // Define s8 as an 8-bit signed integer type[cite: 9]
+typedef unsigned short u16;                           // Define u16 as a 16-bit unsigned integer type[cite: 9]
+typedef short s16;                                    // Define s16 as a 16-bit signed integer type[cite: 9]
+typedef unsigned int u32;                             // Define u32 as a 32-bit unsigned integer type[cite: 9]
+typedef int s32;                                      // Define s32 as a 32-bit signed integer type[cite: 9]
+typedef float f32;                                    // Define f32 as a single-precision floating-point type[cite: 9]
+typedef double s64;                                   // Define s64 as a double-precision floating-point type (note: named s64 here)[cite: 9]
+                                                      // Blank line before end of file[cite: 9]
+                                                      // Trailing newline at end of header file[cite: 9]

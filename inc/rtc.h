@@ -1,19 +1,20 @@
-//rtc.h
-#ifndef RTC_H
-#define RTC_H
-
-#include "types.h"
-
-extern u32 rsec, rmin, rhrs;
-extern u32 rdate, rmonth, ryear;
-
-void InitRTC(void);
-
-void RTC_SET_TIME(u32 sec, u32 min, u32 hrs);
-void RTC_SET_DATE(u32 date, u32 month, u32 year);
-
-void RTC_READ_TIME(void);
-void RTC_READ_DATE(void);
-
-#endif
-
+//rtc.h                                               // Header file name comment for Real-Time Clock (RTC) driver declarations[cite: 7]
+#ifndef RTC_H                                         // Start include guard: check if RTC_H is not yet defined[cite: 7]
+#define RTC_H                                         // Define RTC_H to prevent multiple inclusion of this header[cite: 7]
+                                                      // Blank line after include guard definition[cite: 7]
+#include "types.h"                                    // Include custom fixed-width integer/float type aliases (u32, etc.)[cite: 7]
+                                                      // Blank line separating includes from external variables[cite: 7]
+extern u32 rsec, rmin, rhrs;                          // Declare external RTC time variables: seconds, minutes, and hours[cite: 7]
+extern u32 rdate, rmonth, ryear;                      // Declare external RTC calendar variables: date, month, and year[cite: 7]
+                                                      // Blank line separating external variables from function prototypes[cite: 7]
+void InitRTC(void);                                   // Declare function to initialize RTC hardware peripheral[cite: 7]
+                                                      // Blank line separating initialization from set functions[cite: 7]
+void RTC_SET_TIME(u32 sec, u32 min, u32 hrs);         // Declare function to set RTC time (seconds, minutes, hours)[cite: 7]
+void RTC_SET_DATE(u32 date, u32 month, u32 year);     // Declare function to set RTC date (date, month, year)[cite: 7]
+                                                      // Blank line separating set functions from read functions[cite: 7]
+void RTC_READ_TIME(void);                             // Declare function to read current time from RTC into rsec/rmin/rhrs[cite: 7]
+void RTC_READ_DATE(void);                             // Declare function to read current date from RTC into rdate/rmonth/ryear[cite: 7]
+                                                      // Blank line before closing include guard[cite: 7]
+#endif                                                // End include guard for RTC_H[cite: 7]
+                                                      // Blank line before end of file[cite: 7]
+                                                      // Trailing newline at end of header file[cite: 7]

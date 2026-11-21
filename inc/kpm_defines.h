@@ -1,11 +1,11 @@
-//kpm_defines.h
-#define ROW0 16 //@p1.16
-#define ROW1 17 //@p1.17
-#define ROW2 18 //@p1.18
-#define ROW3 19 //@p1.19
-#define COL0 20 //@p1.20
-#define COL1 21 //@p1.21
-#define COL2 22 //@p1.22
-#define COL3 23 //@p1.23
-
-
+//kpm_defines.h                                       // Header file name comment for keypad matrix (KPM) pin definitions[cite: 5]
+#define ROW0 16 //@p1.16                              // Define keypad row 0 pin index as 16, mapped to Port 1 Pin 16 (P1.16)[cite: 5]
+#define ROW1 17 //@p1.17                              // Define keypad row 1 pin index as 17, mapped to Port 1 Pin 17 (P1.17)[cite: 5]
+#define ROW2 18 //@p1.18                              // Define keypad row 2 pin index as 18, mapped to Port 1 Pin 18 (P1.18)[cite: 5]
+#define ROW3 19 //@p1.19                              // Define keypad row 3 pin index as 19, mapped to Port 1 Pin 19 (P1.19)[cite: 5]
+#define COL0 20 //@p1.20                              // Define keypad column 0 pin index as 20, mapped to Port 1 Pin 20 (P1.20)[cite: 5]
+#define COL1 21 //@p1.21                              // Define keypad column 1 pin index as 21, mapped to Port 1 Pin 21 (P1.21)[cite: 5]
+#define COL2 22 //@p1.22                              // Define keypad column 2 pin index as 22, mapped to Port 1 Pin 22 (P1.22)[cite: 5]
+#define COL3 23 //@p1.23                              // Define keypad column 3 pin index as 23, mapped to Port 1 Pin 23 (P1.23)[cite: 5]
+                                                      // Blank line before end of file[cite: 5]
+                                                      // Trailing newline at end of header file[cite: 5]

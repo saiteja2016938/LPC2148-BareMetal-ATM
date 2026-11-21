@@ -1,19 +1,20 @@
-// uart.h
-
-#include "types.h"
-// primary drivers
-
-void UART0_Init(void);
-void UART0_Tx(u8 sDat);
-u8 UART0_Rx(void);
-
-
-
-// secondary drivers
-
-void U0_TxStr(s8 *);
-void U0_TxU32(u32 );
-void U0_TxS32(s32 );
-void U0_TxF32(f32,u8);
-s8 * U0_RxStr(void);
-
+// uart.h                                             // Header file name comment for UART driver function declarations[cite: 10]
+                                                      // Blank line after file header comment[cite: 10]
+#include "types.h"                                    // Include custom type definitions (u8, u32, s32, f32, s8)[cite: 10]
+// primary drivers                                    // Section comment for low-level primary UART hardware routines[cite: 10]
+                                                      // Blank line after primary drivers section comment[cite: 10]
+void UART0_Init(void);                                // Declare function to initialize UART0 baud rate, frame format, and pins[cite: 10]
+void UART0_Tx(u8 sDat);                               // Declare function to transmit a single 8-bit byte over UART0[cite: 10]
+u8 UART0_Rx(void);                                    // Declare function to receive a single 8-bit byte from UART0[cite: 10]
+                                                      // Blank line separating primary UART functions[cite: 10]
+                                                      // Blank line before secondary drivers section[cite: 10]
+                                                      // Blank line above secondary drivers comment[cite: 10]
+// secondary drivers                                  // Section comment for higher-level formatted/string UART routines[cite: 10]
+                                                      // Blank line after secondary drivers comment[cite: 10]
+void U0_TxStr(s8 *);                                  // Declare function to transmit a null-terminated string over UART0[cite: 10]
+void U0_TxU32(u32 );                                 // Declare function to transmit an unsigned 32-bit integer in ASCII over UART0[cite: 10]
+void U0_TxS32(s32 );                                 // Declare function to transmit a signed 32-bit integer in ASCII over UART0[cite: 10]
+void U0_TxF32(f32,u8);                                // Declare function to transmit a float with specified decimal places over UART0[cite: 10]
+s8 * U0_RxStr(void);                                  // Declare function to receive a string from UART0 and return pointer to buffer[cite: 10]
+                                                      // Blank line before end of file[cite: 10]
+                                                      // Trailing newline at end of header file[cite: 10]

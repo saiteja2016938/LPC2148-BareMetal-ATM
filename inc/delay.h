@@ -1,5 +1,6 @@
-//delay.h
-#include "types.h"
-void delay_us(u32 dlyUS);
-void delay_ms(u32 dlyMS);
-void delay_s(u32 dlyS);
+//delay.h                                             // Header file name comment for delay routine declarations[cite: 3]
+#include "types.h"                                    // Include custom type definitions (such as u32)[cite: 3]
+void delay_us(u32 dlyUS);                             // Declare busy-wait/timer delay function for microseconds (dlyUS)[cite: 3]
+void delay_ms(u32 dlyMS);                             // Declare delay function for milliseconds (dlyMS)[cite: 3]
+void delay_s(u32 dlyS);                               // Declare delay function for seconds (dlyS)[cite: 3]
+                                                      // Trailing newline at end of header file[cite: 3]

@@ -1,24 +1,25 @@
-//uart_defines.h
-
-#define TXD0_PIN_FUNC 0x00000001
-#define RXD0_PIN_FUNC 0x00000004
-#define BAUD 9600
-#define FOSC 12000000
-#define CCLK (FOSC*5)
-#define PCLK (CCLK/4)
-#define DIVISOR (PCLK/(16 * BAUD))
-
-
-//define for UxLCR sfr
-#define _8BIT             3
-#define WORD_LEN_SEL_BITS  0
-#define DLAB_BIT          7
-
-
-//defines for UxLSR sfr
-#define TEMT_BIT    6
-#define DR_BIT      0
-
-// add more defines as & when required 
-
-
+//uart_defines.h                                      // Header file name comment for UART0 clock, baud, and register bit macros[cite: 11]
+                                                      // Blank line after file header comment[cite: 11]
+#define TXD0_PIN_FUNC 0x00000001                      // Define pin function selection value for TXD0[cite: 11]
+#define RXD0_PIN_FUNC 0x00000004                      // Define pin function selection value for RXD0[cite: 11]
+#define BAUD 9600                                     // Define target UART communication baud rate as 9600 bps[cite: 11]
+#define FOSC 12000000                                 // Define oscillator crystal frequency as 12 MHz (12,000,000 Hz)[cite: 11]
+#define CCLK (FOSC*5)                                 // Calculate CPU clock (CCLK) as 5x oscillator frequency (60 MHz)[cite: 11]
+#define PCLK (CCLK/4)                                 // Calculate peripheral clock (PCLK) as CCLK divided by 4 (15 MHz)[cite: 11]
+#define DIVISOR (PCLK/(16 * BAUD))                    // Calculate UART baud rate generator divisor value[cite: 11]
+                                                      // Blank line separating clock/baud macros from UxLCR definitions[cite: 11]
+                                                      // Blank line above UxLCR comment[cite: 11]
+//define for UxLCR sfr                                // Section comment for UART Line Control Register (UxLCR) bit macros[cite: 11]
+#define _8BIT             3                           // Define value 3 representing 8-bit character length in UxLCR[cite: 11]
+#define WORD_LEN_SEL_BITS  0                          // Define starting bit position (0) for word length selection in UxLCR[cite: 11]
+#define DLAB_BIT          7                           // Define Divisor Latch Access Bit (DLAB) position as 7 in UxLCR[cite: 11]
+                                                      // Blank line separating UxLCR definitions from UxLSR definitions[cite: 11]
+                                                      // Blank line above UxLSR comment[cite: 11]
+//defines for UxLSR sfr                               // Section comment for UART Line Status Register (UxLSR) bit macros[cite: 11]
+#define TEMT_BIT    6                                 // Define Transmitter Empty (TEMT) status bit position as 6 in UxLSR[cite: 11]
+#define DR_BIT      0                                 // Define Data Ready (DR) receiver status bit position as 0 in UxLSR[cite: 11]
+                                                      // Blank line before placeholder comment[cite: 11]
+// add more defines as & when required                // Placeholder comment noting additional macros can be added as needed[cite: 11]
+                                                      // Blank line before end of file[cite: 11]
+                                                      // Blank line before end of file[cite: 11]
+                                                      // Trailing newline at end of header file[cite: 11]

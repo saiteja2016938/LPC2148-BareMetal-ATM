@@ -1,15 +1,15 @@
-//intrrupt.h
-
-
-
-#ifndef INTRRUPT_H
-#define INTRRUPT_H
-
-#include "types.h"
-
-extern volatile u32 rtc_setup_requested;
-
-void InitEINT3(void);
-void eint3_isr(void) __irq;
-
-#endif
+//intrrupt.h                                          // Header file name comment for external interrupt declarations (note spelling)[cite: 4]
+                                                      // Blank line after file header comment[cite: 4]
+                                                      // Blank line before include guard[cite: 4]
+#ifndef INTRRUPT_H                                    // Start include guard: check if INTRRUPT_H is not yet defined[cite: 4]
+#define INTRRUPT_H                                    // Define INTRRUPT_H to prevent multiple inclusion of this header[cite: 4]
+                                                      // Blank line separating include guard from includes[cite: 4]
+#include "types.h"                                    // Include custom integer type definitions (such as u32)[cite: 4]
+                                                      // Blank line separating includes from global declarations[cite: 4]
+extern volatile u32 rtc_setup_requested;              // Declare external volatile flag set in ISR when RTC setup is requested[cite: 4]
+                                                      // Blank line separating variable declaration from function prototypes[cite: 4]
+void InitEINT3(void);                                 // Declare initialization function for External Interrupt 3 (EINT3)[cite: 4]
+void eint3_isr(void) __irq;                           // Declare ARM __irq interrupt service routine handler for EINT3[cite: 4]
+                                                      // Blank line before closing include guard[cite: 4]
+#endif                                                // End include guard for INTRRUPT_H[cite: 4]
+                                                      // Trailing newline at end of header file[cite: 4]

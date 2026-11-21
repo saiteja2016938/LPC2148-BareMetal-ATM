@@ -1,25 +1,25 @@
-//defubes.h
-
-#define SETBIT(WORD,BITPOS) WORD |=1<<BITPOS
-
-#define CLRBIT(WORD,BITPOS) WORD &=~(1<<BITPOS);
-
-#define CPLBIT(WORD,BITPOS) WORD ^= 1<<BITPOS
-
-#define WRITEBIT(WORD,BITPOS,BIT) WORD=((WORD & ~(1<<BITPOS)) | (BIT<<BITPOS))
-
-#define READBIT(WORD,BITPOS) ((WORD>>BITPOS)&1)
-
-#define READWRITEBIT(WORD,DBIT,SBIT) WORD=(( & ~(1<<DBIT))|(((WORD>>SBIT)&1)<<DBIT))
-
-#define READWRITEBIT2(DWORD,DBIT,SWORD,SBIT) DWORD=((DWORD &~(1<<DBIT))|(((SWORD>>SBIT)&1)<<DBIT));
-
-#define WRITENIBBLE(WORD,STARTBIT,VAL) WORD=((WORD &~(15<<STARTBIT))|(VAL<<STARTBIT))
-
-#define READNIBBLE(reg, pin) (((reg) >> (pin)) & 0x0F)
-
-#define WRITEBYTE(WORD,STARTBIT,VAL) WORD=((WORD & ~((u32)255<<STARTBIT))|((u32)VAL<<STARTBIT));
-
-#define READBYTE(WORD,STARTBIT) ((WORD>>START)&255)
-
-
+//defubes.h                                                                                    // Header file name comment (typo "defubes.h" in original file)[cite: 2]
+                                                                                               // Blank line after file header comment[cite: 2]
+#define SETBIT(WORD,BITPOS) WORD |=1<<BITPOS                                                   // Macro to set bit at BITPOS in WORD using bitwise OR[cite: 2]
+                                                                                               // Blank line separating macro definitions[cite: 2]
+#define CLRBIT(WORD,BITPOS) WORD &=~(1<<BITPOS);                                               // Macro to clear bit at BITPOS in WORD (note: trailing semicolon in macro)[cite: 2]
+                                                                                               // Blank line separating macro definitions[cite: 2]
+#define CPLBIT(WORD,BITPOS) WORD ^= 1<<BITPOS                                                  // Macro to toggle/complement bit at BITPOS in WORD using bitwise XOR[cite: 2]
+                                                                                               // Blank line separating macro definitions[cite: 2]
+#define WRITEBIT(WORD,BITPOS,BIT) WORD=((WORD & ~(1<<BITPOS)) | (BIT<<BITPOS))                 // Macro to write bit value BIT at BITPOS in WORD (clear then set)[cite: 2]
+                                                                                               // Blank line separating macro definitions[cite: 2]
+#define READBIT(WORD,BITPOS) ((WORD>>BITPOS)&1)                                                // Macro to read and return bit value (0 or 1) at BITPOS in WORD[cite: 2]
+                                                                                               // Blank line separating macro definitions[cite: 2]
+#define READWRITEBIT(WORD,DBIT,SBIT) WORD=(( & ~(1<<DBIT))|(((WORD>>SBIT)&1)<<DBIT))          // Macro intended to copy bit SBIT to DBIT in WORD (note: missing operand before '&')[cite: 2]
+                                                                                               // Blank line separating macro definitions[cite: 2]
+#define READWRITEBIT2(DWORD,DBIT,SWORD,SBIT) DWORD=((DWORD &~(1<<DBIT))|(((SWORD>>SBIT)&1)<<DBIT)); // Macro to copy bit SBIT from SWORD to DBIT in DWORD (note: trailing semicolon)[cite: 2]
+                                                                                               // Blank line separating macro definitions[cite: 2]
+#define WRITENIBBLE(WORD,STARTBIT,VAL) WORD=((WORD &~(15<<STARTBIT))|(VAL<<STARTBIT))          // Macro to write 4-bit nibble VAL starting at STARTBIT in WORD[cite: 2]
+                                                                                               // Blank line separating macro definitions[cite: 2]
+#define READNIBBLE(reg, pin) (((reg) >> (pin)) & 0x0F)                                         // Macro to read 4-bit nibble (mask 0x0F) starting at pin in reg[cite: 2]
+                                                                                               // Blank line separating macro definitions[cite: 2]
+#define WRITEBYTE(WORD,STARTBIT,VAL) WORD=((WORD & ~((u32)255<<STARTBIT))|((u32)VAL<<STARTBIT)); // Macro to write 8-bit byte VAL (cast to u32) at STARTBIT in WORD (note: trailing semicolon)[cite: 2]
+                                                                                               // Blank line separating macro definitions[cite: 2]
+#define READBYTE(WORD,STARTBIT) ((WORD>>START)&255)                                            // Macro to read 8-bit byte (mask 255) at STARTBIT (note: macro arg is STARTBIT, body uses START)[cite: 2]
+                                                                                               // Blank line before end of file[cite: 2]
+                                                                                               // Trailing newline at end of header file[cite: 2]
