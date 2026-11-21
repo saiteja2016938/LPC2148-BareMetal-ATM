@@ -46,7 +46,7 @@ An embedded **Automated Teller Machine (ATM) Controller** built on the **LPC2148
 | **UART0 Serial** | `TXD0` / `RXD0` (`P0.0`, `P0.1`)[cite: 19] | Serial TX / RX (`9600` baud)[cite: 11, 19] | `FOSC=12MHz`, `CCLK=60MHz`, `PCLK=15MHz`, `DIVISOR`[cite: 11] |
 
 
-![image alt](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/7bf5086c70c01a003549a26c65143185c3360073/docs/assets/4x4%20Keypad%20Interface%20to%20LPC2148.png)
+
 ---
 
 ## 4. Keypad Controls & Key Map
@@ -73,8 +73,7 @@ An embedded **Automated Teller Machine (ATM) Controller** built on the **LPC2148
 | `'B'` | — | Next (newer) transaction[cite: 16] | — |
 | `'D'` | Cancel entry (`INPUT_CANCEL`)[cite: 16] | Exit history viewer[cite: 16] | — |
 
-
-![image alt](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/9e21b25da4c1d8629f29ee1f6da7f4ecec767447/docs/assets/kpm_imag_1.png)
+![image alt](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/7bf5086c70c01a003549a26c65143185c3360073/docs/assets/4x4%20Keypad%20Interface%20to%20LPC2148.png)
 ---
 
 ## 5. Project File & Module Guide
