@@ -1,15 +1,16 @@
-//delay.c
-#include "types.h"
-
-void delay_us(u32 dlyUS)
-{
-	for(dlyUS*=12;dlyUS>0;dlyUS--);
-}
-void delay_ms(u32 dlyMS)
-{
-	for(dlyMS*=12000;dlyMS>0;dlyMS--);
-}
-void delay_s(u32 dlyS)
-{
-	for(dlyS*=12000000;dlyS>0;dlyS--);
-}
+//delay.c                                                                     // Source file name comment for software delay implementations[cite: 12]
+#include "types.h"                                                            // Include custom type definitions header (provides u32)[cite: 12]
+                                                                              // Blank line separating include from function definitions[cite: 12]
+void delay_us(u32 dlyUS)                                                      // Define delay function accepting duration in microseconds[cite: 12]
+{                                                                             // Opening brace for delay_us function body[cite: 12]
+	for(dlyUS*=12;dlyUS>0;dlyUS--);                                               // Scale microseconds by 12 loop iterations and busy-wait down to 0[cite: 12]
+}                                                                             // Closing brace for delay_us function body[cite: 12]
+void delay_ms(u32 dlyMS)                                                      // Define delay function accepting duration in milliseconds[cite: 12]
+{                                                                             // Opening brace for delay_ms function body[cite: 12]
+	for(dlyMS*=12000;dlyMS>0;dlyMS--);                                            // Scale milliseconds by 12000 loop iterations and busy-wait down to 0[cite: 12]
+}                                                                             // Closing brace for delay_ms function body[cite: 12]
+void delay_s(u32 dlyS)                                                        // Define delay function accepting duration in seconds[cite: 12]
+{                                                                             // Opening brace for delay_s function body[cite: 12]
+	for(dlyS*=12000000;dlyS>0;dlyS--);                                          // Scale seconds by 12000000 loop iterations and busy-wait down to 0[cite: 12]
+}                                                                             // Closing brace for delay_s function body[cite: 12]
+                                                                              // Trailing newline at end of source file[cite: 12]

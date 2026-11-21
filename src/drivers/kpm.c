@@ -1,65 +1,66 @@
-//kpm.c
-#include <LPC21xx.h>
-#include "defines.h"
-#include "types.h"
-#include "kpm_defines.h"
-
-extern u32 kpmLUT[][4];
-u32 ColScan(void)
-{
-	u32 status;
-	status=READNIBBLE(IOPIN1,COL0);
-	return ((status<15) ? 0 : 1);
-}
-
-u32 RowCheck(void)
-{
-	u32 r;
-	for(r=0;r<=3;r++)
-	{
-		WRITENIBBLE(IOPIN1,ROW0,~(1<<r));
-		if(ColScan()==0)
-		{
-			break;
-		}
-	}
-	WRITENIBBLE(IOPIN1,ROW0,0);
-	return r;
-}
-
-u32 ColCheck(void)
-{
-	u32 c;
-	for(c=0;c<=3;c++)
-	{
-		if(READBIT(IOPIN1,COL0+c)==0)
-			break;
-	}
-	return c;
-}
-
-u32 KeyScan(void)
-{
-	 u32 row,col,keyV;
-	 while(ColScan());
-   row=RowCheck();
-   col=ColCheck();
-   keyV=kpmLUT[row][col];
-   return keyV; 	
-}
-
-void InitKPM(void)
-{
-	//all rows grounded(output)
-	IODIR1|=15<<ROW0;
-	//all cols high (input)
-	//IODIR1 &=~(15<<COL0); //default
-}
-
-u32 kpmLUT[4][4] =
-{
-    {'1', '2', '3', 'A'},
-    {'4', '5', '6', 'B'},
-    {'7', '8', '9', 'C'},
-    {'*', '0', '#', 'D'}
-};
+//kpm.c                                                                       // Source file name comment for 4x4 matrix keypad (KPM) driver[cite: 14]
+#include <LPC21xx.h>                                                          // Include LPC21xx register definitions (IOPIN1, IODIR1, etc.)[cite: 14]
+#include "defines.h"                                                          // Include bit manipulation macros (READNIBBLE, WRITENIBBLE, READBIT)[cite: 14]
+#include "types.h"                                                            // Include custom type definitions (u32, etc.)[cite: 14]
+#include "kpm_defines.h"                                                      // Include keypad row/column pin definitions (ROW0..ROW3, COL0..COL3)[cite: 14]
+                                                                              // Blank line separating includes from global declarations[cite: 14]
+extern u32 kpmLUT[][4];                                                       // Declare external 4x4 keypad lookup table defined later in file[cite: 14]
+u32 ColScan(void)                                                             // Define function to check if any column line is pulled low[cite: 14]
+{                                                                             // Opening brace for ColScan function body[cite: 14]
+	u32 status;                                                                 // Declare local variable to hold column nibble state[cite: 14]
+	status=READNIBBLE(IOPIN1,COL0);                                             // Read 4-bit column nibble starting at COL0 from IOPIN1[cite: 14]
+	return ((status<15) ? 0 : 1);                                               // Return 0 if any column bit is 0 (key pressed), else 1 (no key)[cite: 14]
+}                                                                             // Closing brace for ColScan function body[cite: 14]
+                                                                              // Blank line separating ColScan and RowCheck[cite: 14]
+u32 RowCheck(void)                                                            // Define function to scan rows and find which row has a pressed key[cite: 14]
+{                                                                             // Opening brace for RowCheck function body[cite: 14]
+	u32 r;                                                                      // Declare local row index variable r[cite: 14]
+	for(r=0;r<=3;r++)                                                           // Loop through row indices 0 to 3[cite: 14]
+	{                                                                         // Opening brace for row scan loop[cite: 14]
+		WRITENIBBLE(IOPIN1,ROW0,~(1<<r));                                         // Drive active-low row pattern (~(1<<r)) onto row pins starting at ROW0[cite: 14]
+		if(ColScan()==0)                                                        // Check if a key press is detected on any column for current row[cite: 14]
+		{                                                                     // Opening brace for key-detected branch[cite: 14]
+			break;                                                              // Exit loop once active row is identified[cite: 14]
+		}                                                                     // Closing brace for key-detected branch[cite: 14]
+	}                                                                         // Closing brace for row scan loop[cite: 14]
+	WRITENIBBLE(IOPIN1,ROW0,0);                                                 // Reset/clear row nibble on IOPIN1 back to 0[cite: 14]
+	return r;                                                                   // Return detected row index (0..3, or 4 if none matched)[cite: 14]
+}                                                                             // Closing brace for RowCheck function body[cite: 14]
+                                                                              // Blank line separating RowCheck and ColCheck[cite: 14]
+u32 ColCheck(void)                                                            // Define function to determine which column pin (0..3) is low[cite: 14]
+{                                                                             // Opening brace for ColCheck function body[cite: 14]
+	u32 c;                                                                      // Declare local column index variable c[cite: 14]
+	for(c=0;c<=3;c++)                                                           // Loop through column indices 0 to 3[cite: 14]
+	{                                                                         // Opening brace for column check loop[cite: 14]
+		if(READBIT(IOPIN1,COL0+c)==0)                                           // Test if column pin (COL0 + c) on IOPIN1 reads logic 0[cite: 14]
+			break;                                                              // Stop scanning once active low column is found[cite: 14]
+	}                                                                         // Closing brace for column check loop[cite: 14]
+	return c;                                                                   // Return detected column index (0..3, or 4 if none low)[cite: 14]
+}                                                                             // Closing brace for ColCheck function body[cite: 14]
+                                                                              // Blank line separating ColCheck and KeyScan[cite: 14]
+u32 KeyScan(void)                                                             // Define blocking function to wait for and return pressed key character[cite: 14]
+{                                                                             // Opening brace for KeyScan function body[cite: 14]
+	 u32 row,col,keyV;                                                          // Declare local variables for row index, column index, and key value[cite: 14]
+	 while(ColScan());                                                          // Wait while ColScan() returns non-zero (no key currently pressed)[cite: 14]
+   row=RowCheck();                                                            // Identify which row corresponds to the pressed key[cite: 14]
+   col=ColCheck();                                                            // Identify which column corresponds to the pressed key[cite: 14]
+   keyV=kpmLUT[row][col];                                                     // Look up ASCII key code from 4x4 lookup table using row and col[cite: 14]
+   return keyV; 	                                                            // Return the decoded key value[cite: 14]
+}                                                                             // Closing brace for KeyScan function body[cite: 14]
+                                                                              // Blank line separating KeyScan and InitKPM[cite: 14]
+void InitKPM(void)                                                            // Define initialization function for keypad GPIO directions[cite: 14]
+{                                                                             // Opening brace for InitKPM function body[cite: 14]
+	//all rows grounded(output)                                                 // Comment stating row pins are configured as outputs[cite: 14]
+	IODIR1|=15<<ROW0;                                                           // Set 4 row bits starting at ROW0 in IODIR1 as outputs (15 = 0x0F)[cite: 14]
+	//all cols high (input)                                                     // Comment noting column pins act as inputs[cite: 14]
+	//IODIR1 &=~(15<<COL0); //default                                          // Commented-out statement clearing column direction bits (default input)[cite: 14]
+}                                                                             // Closing brace for InitKPM function body[cite: 14]
+                                                                              // Blank line separating InitKPM and kpmLUT definition[cite: 14]
+u32 kpmLUT[4][4] =                                                            // Define 4x4 lookup table mapping (row, col) to keypad characters[cite: 14]
+{                                                                             // Opening brace for 2D lookup table initializer[cite: 14]
+    {'1', '2', '3', 'A'},                                                     // Row 0 keys: '1', '2', '3', 'A'[cite: 14]
+    {'4', '5', '6', 'B'},                                                     // Row 1 keys: '4', '5', '6', 'B'[cite: 14]
+    {'7', '8', '9', 'C'},                                                     // Row 2 keys: '7', '8', '9', 'C'[cite: 14]
+    {'*', '0', '#', 'D'}                                                      // Row 3 keys: '*', '0', '#', 'D'[cite: 14]
+};                                                                            // Closing brace and semicolon for kpmLUT array[cite: 14]
+                                                                              // Trailing newline at end of source file[cite: 14]

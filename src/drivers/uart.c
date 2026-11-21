@@ -1,137 +1,138 @@
-// uart.c
-#include <lpc21xx.h>
-#include "types.h"
-#include "uart_defines.h"
-
-
-void UART0_Init(void)
-{
-    // cfg p0.0 ,p0.1 pins as 
-	// TXD & RXD pins respectively
-	PINSEL0&=~((3 << 2) | ( 3 << 0));
-	PINSEL0|= TXD0_PIN_FUNC|RXD0_PIN_FUNC;
-	 //cfg UxLCR for 8N1 ,&DLAB sets
-	 U0LCR = (( 1 << DLAB_BIT)|(_8BIT << WORD_LEN_SEL_BITS));
-
-	// cfg baudrate
-
-	U0DLL = DIVISOR;
-	U0DLM = DIVISOR >> 8;
-	// reset / clear DLAB bit
-	U0LCR &= ~ (1 << DLAB_BIT);
-
-}
-
-void UART0_Tx(u8 sDat)
-{
-// write to UxTHR, serialization begins 
-U0THR = sDat;
-// wait until serialization out compleates 
-while(((U0LSR >> TEMT_BIT)&1)==0);
-
-}
-
-u8 UART0_Rx(void)
-{
-
-   // wait until reception status observed 
-   while(((U0LSR>>DR_BIT)&1)==0);
-   // read & return recvd byte 
-   return U0RBR;
-
- }
-
- void U0_TxStr(s8 *s)
- {
-
-       while(*s)
-	       UART0_Tx(*s++);
-
-
-}
-
-void U0_TxU32(u32 n)
-{
-     s32 i=0;		u8 a[10];
-
-	 if(n==0)
-	 {
-	     UART0_Tx('0');
-	 }
-	 else
-	 {
-	      while(n>0)
-		  {
-		         a[i++]=(n%10)+48;
-				 n/=10;
-
-	      }
-		  for(--i;i>=0;i--)
-		  {
-		      UART0_Tx(a[i]);
-		  }
-
-	}
-}
-
-void U0_TxS32(s32 n)
-{
-
-
-    if(n < 0)
-	{
-	     UART0_Tx('-');
-		 n=-n;
-
-	}
-	U0_TxU32(n);
-}
-
-void U0_TxF32(f32 fn,u8 nDp)
-{
-
-   u32 n,i;
-
-        if(fn < 0.0)
-		{
-
-		UART0_Tx('-');
-		fn = -fn;
-		}
-
-    n = fn;
-	U0_TxU32(n);
-	UART0_Tx('.');
-	 for(i=0; i < nDp ; i++)
-	 {
-	      fn= (fn-n)*10;
-		  n=fn;
-
-	UART0_Tx(n+48);
-	}
-}
-
-s8 * U0_RxStr(void)
-{
-     static s8 rBuff[100];
-
-	 s8 t, i=0;
-	 while(1)
-	 {
-	     t = UART0_Rx();
-		 rBuff[i]=t;
-		 UART0_Tx(t);
-		 if((t=='\n')||(t=='\r'))
-		 {
-		     rBuff[i]='\0';
-			 break;
-
-		 }
-		 i++;
-    }
-      U0_TxStr("\n\r");
-
-	return rBuff;
-
-}
-
+// uart.c                                                               // Source file name comment for UART0 serial driver routines[cite: 19]
+#include <lpc21xx.h>                                                    // Include LPC21xx microcontroller SFR definitions (PINSEL0, U0LCR, etc.)[cite: 19]
+#include "types.h"                                                      // Include custom fixed-width integer and float type definitions[cite: 19]
+#include "uart_defines.h"                                               // Include UART0 clock, baud divisor, and register bit macros[cite: 19]
+                                                                        // Blank line separating include directives from UART0_Init[cite: 19]
+                                                                        // Blank line before UART0_Init[cite: 19]
+void UART0_Init(void)                                                   // Define initialization function for UART0 peripheral[cite: 19]
+{                                                                       // Opening brace for UART0_Init function body[cite: 19]
+    // cfg p0.0 ,p0.1 pins as                                           // Comment noting P0.0 and P0.1 pin function assignment[cite: 19]
+	// TXD & RXD pins respectively                                        // Continuation comment: P0.0 -> TXD0, P0.1 -> RXD0[cite: 19]
+	PINSEL0&=~((3 << 2) | ( 3 << 0));                                     // Clear pin function bits [3:2] (P0.1) and [1:0] (P0.0) in PINSEL0[cite: 19]
+	PINSEL0|= TXD0_PIN_FUNC|RXD0_PIN_FUNC;                                // Select TXD0 and RXD0 functions on P0.0 and P0.1[cite: 19]
+	 //cfg UxLCR for 8N1 ,&DLAB sets                                     // Comment noting 8-bit, no parity, 1 stop bit (8N1) and enabling DLAB[cite: 19]
+	 U0LCR = (( 1 << DLAB_BIT)|(_8BIT << WORD_LEN_SEL_BITS));             // Set 8-bit word length and enable DLAB (bit 7) to access baud divisor latches[cite: 19]
+                                                                        // Blank line before baud rate divisor configuration[cite: 19]
+	// cfg baudrate                                                       // Comment noting U0DLL/U0DLM baud rate divisor programming[cite: 19]
+                                                                        // Blank line before writing U0DLL and U0DLM[cite: 19]
+	U0DLL = DIVISOR;                                                      // Load lower 8 bits of baud rate divisor into U0DLL[cite: 19]
+	U0DLM = DIVISOR >> 8;                                                 // Load upper 8 bits of baud rate divisor into U0DLM[cite: 19]
+	// reset / clear DLAB bit                                             // Comment noting clearing DLAB after programming baud rate[cite: 19]
+	U0LCR &= ~ (1 << DLAB_BIT);                                           // Clear DLAB bit in U0LCR so U0THR/U0RBR/U0IER are accessible[cite: 19]
+                                                                        // Blank line before closing UART0_Init[cite: 19]
+}                                                                       // Closing brace for UART0_Init function body[cite: 19]
+                                                                        // Blank line separating UART0_Init and UART0_Tx[cite: 19]
+void UART0_Tx(u8 sDat)                                                  // Define function to transmit a single byte over UART0[cite: 19]
+{                                                                       // Opening brace for UART0_Tx function body[cite: 19]
+// write to UxTHR, serialization begins                                 // Comment noting writing to U0THR starts shift-register serialization[cite: 19]
+U0THR = sDat;                                                           // Write byte sDat into UART0 Transmit Holding Register (U0THR)[cite: 19]
+// wait until serialization out compleates                             // Comment noting polling TEMT bit until transmit shift register is empty[cite: 19]
+while(((U0LSR >> TEMT_BIT)&1)==0);                                      // Wait while Transmitter Empty (TEMT) bit in U0LSR is 0[cite: 19]
+                                                                        // Blank line before closing UART0_Tx[cite: 19]
+}                                                                       // Closing brace for UART0_Tx function body[cite: 19]
+                                                                        // Blank line separating UART0_Tx and UART0_Rx[cite: 19]
+u8 UART0_Rx(void)                                                       // Define blocking function to receive one byte from UART0[cite: 19]
+{                                                                       // Opening brace for UART0_Rx function body[cite: 19]
+                                                                        // Blank line inside UART0_Rx before polling loop[cite: 19]
+   // wait until reception status observed                              // Comment noting polling Data Ready (DR) status bit in U0LSR[cite: 19]
+   while(((U0LSR>>DR_BIT)&1)==0);                                       // Wait while Data Ready (DR) bit in U0LSR is 0 (no byte received)[cite: 19]
+   // read & return recvd byte                                         // Comment noting reading received byte from U0RBR[cite: 19]
+   return U0RBR;                                                        // Read and return received byte from UART0 Receiver Buffer Register (U0RBR)[cite: 19]
+                                                                        // Blank line before closing UART0_Rx[cite: 19]
+ }                                                                      // Closing brace for UART0_Rx function body[cite: 19]
+                                                                        // Blank line separating UART0_Rx and U0_TxStr[cite: 19]
+ void U0_TxStr(s8 *s)                                                   // Define function to transmit a null-terminated string over UART0[cite: 19]
+ {                                                                      // Opening brace for U0_TxStr function body[cite: 19]
+                                                                        // Blank line inside U0_TxStr before while loop[cite: 19]
+       while(*s)                                                        // Loop until null terminator ('\0') at end of string[cite: 19]
+	       UART0_Tx(*s++);                                                  // Transmit current character and increment string pointer[cite: 19]
+                                                                        // Blank line inside U0_TxStr[cite: 19]
+                                                                        // Blank line before closing U0_TxStr[cite: 19]
+}                                                                       // Closing brace for U0_TxStr function body[cite: 19]
+                                                                        // Blank line separating U0_TxStr and U0_TxU32[cite: 19]
+void U0_TxU32(u32 n)                                                    // Define function to transmit an unsigned 32-bit integer in ASCII[cite: 19]
+{                                                                       // Opening brace for U0_TxU32 function body[cite: 19]
+     s32 i=0;		u8 a[10];                                             // Initialize digit counter i = 0 and temporary digit buffer a[10][cite: 19]
+                                                                        // Blank line before zero check[cite: 19]
+	 if(n==0)                                                               // Check if value to transmit is zero[cite: 19]
+	 {                                                                      // Opening brace for zero-value branch[cite: 19]
+	     UART0_Tx('0');                                                     // Transmit ASCII '0' when n is 0[cite: 19]
+	 }                                                                      // Closing brace for zero-value branch[cite: 19]
+	 else                                                                   // Value is non-zero[cite: 19]
+	 {                                                                      // Opening brace for non-zero branch[cite: 19]
+	      while(n>0)                                                        // Extract base-10 digits while n is greater than 0[cite: 19]
+		  {                                                                     // Opening brace for digit extraction loop[cite: 19]
+		         a[i++]=(n%10)+48;                                              // Convert least-significant digit to ASCII (48 = '0') and store[cite: 19]
+				 n/=10;                                                         // Divide n by 10 to shift to next digit[cite: 19]
+                                                                        // Blank line inside digit extraction loop[cite: 19]
+	      }                                                                     // Closing brace for digit extraction loop[cite: 19]
+		  for(--i;i>=0;i--)                                                     // Iterate backward from most-significant digit to index 0[cite: 19]
+		  {                                                                     // Opening brace for reverse transmit loop[cite: 19]
+		      UART0_Tx(a[i]);                                                   // Transmit each digit character over UART0 in proper order[cite: 19]
+		  }                                                                     // Closing brace for reverse transmit loop[cite: 19]
+                                                                        // Blank line inside else branch[cite: 19]
+	}                                                                       // Closing brace for non-zero branch[cite: 19]
+}                                                                       // Closing brace for U0_TxU32 function body[cite: 19]
+                                                                        // Blank line separating U0_TxU32 and U0_TxS32[cite: 19]
+void U0_TxS32(s32 n)                                                    // Define function to transmit a signed 32-bit integer in ASCII[cite: 19]
+{                                                                       // Opening brace for U0_TxS32 function body[cite: 19]
+                                                                        // Blank line inside U0_TxS32[cite: 19]
+                                                                        // Blank line before negative check[cite: 19]
+    if(n < 0)                                                           // Check if signed value is negative[cite: 19]
+	{                                                                      // Opening brace for negative number branch[cite: 19]
+	     UART0_Tx('-');                                                     // Transmit minus sign '-' before magnitude[cite: 19]
+		 n=-n;                                                                // Negate n to obtain positive magnitude[cite: 19]
+                                                                        // Blank line inside negative branch[cite: 19]
+	}                                                                       // Closing brace for negative number branch[cite: 19]
+	U0_TxU32(n);                                                          // Transmit positive magnitude using U0_TxU32[cite: 19]
+}                                                                       // Closing brace for U0_TxS32 function body[cite: 19]
+                                                                        // Blank line separating U0_TxS32 and U0_TxF32[cite: 19]
+void U0_TxF32(f32 fn,u8 nDp)                                             // Define function to transmit floating-point value with nDp decimals[cite: 19]
+{                                                                       // Opening brace for U0_TxF32 function body[cite: 19]
+                                                                        // Blank line inside U0_TxF32[cite: 19]
+   u32 n,i;                                                             // Declare integer part variable n and decimal loop index i[cite: 19]
+                                                                        // Blank line before negative float check[cite: 19]
+        if(fn < 0.0)                                                    // Check if floating-point value is negative[cite: 19]
+		{                                                                     // Opening brace for negative float branch[cite: 19]
+                                                                        // Blank line inside negative float branch[cite: 19]
+		UART0_Tx('-');                                                        // Transmit minus sign '-' over UART0[cite: 19]
+		fn = -fn;                                                             // Convert negative float to positive magnitude[cite: 19]
+		}                                                                     // Closing brace for negative float branch[cite: 19]
+                                                                        // Blank line before integer part output[cite: 19]
+    n = fn;                                                             // Truncate float to obtain integer portion[cite: 19]
+	U0_TxU32(n);                                                          // Transmit integer portion over UART0[cite: 19]
+	UART0_Tx('.');                                                        // Transmit decimal point '.' over UART0[cite: 19]
+	 for(i=0; i < nDp ; i++)                                              // Loop nDp times to extract and transmit fractional digits[cite: 19]
+	 {                                                                    // Opening brace for fractional digits loop[cite: 19]
+	      fn= (fn-n)*10;                                                  // Subtract integer part and scale remainder by 10[cite: 19]
+		  n=fn;                                                               // Extract next fractional digit as integer[cite: 19]
+                                                                        // Blank line inside fractional loop[cite: 19]
+	UART0_Tx(n+48);                                                       // Convert digit to ASCII ('0' = 48) and transmit over UART0[cite: 19]
+	}                                                                     // Closing brace for fractional digits loop[cite: 19]
+}                                                                       // Closing brace for U0_TxF32 function body[cite: 19]
+                                                                        // Blank line separating U0_TxF32 and U0_RxStr[cite: 19]
+s8 * U0_RxStr(void)                                                     // Define function to receive a line/string from UART0 into static buffer[cite: 19]
+{                                                                       // Opening brace for U0_RxStr function body[cite: 19]
+     static s8 rBuff[100];                                              // Static buffer holding received string across calls[cite: 19]
+                                                                        // Blank line after rBuff declaration[cite: 19]
+	 s8 t, i=0;                                                           // Declare received char variable t and buffer index i = 0[cite: 19]
+	 while(1)                                                             // Loop receiving characters until CR ('\r') or LF ('\n')[cite: 19]
+	 {                                                                    // Opening brace for receive loop[cite: 19]
+	     t = UART0_Rx();                                                  // Read one incoming byte from UART0[cite: 19]
+		 rBuff[i]=t;                                                          // Store received character into rBuff[i][cite: 19]
+		 UART0_Tx(t);                                                         // Echo received character back over UART0[cite: 19]
+		 if((t=='\n')||(t=='\r'))                                             // Check if end-of-line character ('\n' or '\r') was received[cite: 19]
+		 {                                                                  // Opening brace for end-of-line branch[cite: 19]
+		     rBuff[i]='\0';                                                   // Replace newline/CR with null terminator in rBuff[cite: 19]
+			 break;                                                           // Exit receive loop[cite: 19]
+                                                                        // Blank line inside end-of-line branch[cite: 19]
+		 }                                                                  // Closing brace for end-of-line branch[cite: 19]
+		 i++;                                                               // Advance buffer index for next character[cite: 19]
+    }                                                                   // Closing brace for receive loop[cite: 19]
+      U0_TxStr("\n\r");                                                 // Transmit newline and carriage return after line is received[cite: 19]
+                                                                        // Blank line before return statement[cite: 19]
+	return rBuff;                                                         // Return pointer to null-terminated received string[cite: 19]
+                                                                        // Blank line before closing U0_RxStr[cite: 19]
+}                                                                       // Closing brace for U0_RxStr function body[cite: 19]
+                                                                        // Blank line before end of file[cite: 19]
+                                                                        // Trailing newline at end of source file[cite: 19]

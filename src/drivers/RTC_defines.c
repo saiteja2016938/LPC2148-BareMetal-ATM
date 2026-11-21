@@ -1,6 +1,7 @@
-//RTC_defines.c
-
-// Clock control registe
-
-#define CCR_BIT_CLKEN     0
-#define ILR_BIT_RTCCIF    0
+//RTC_defines.c                                                         // Source/header name comment for RTC bit macros (note: "registe" typo on next line)[cite: 18]
+                                                                        // Blank line after file name comment[cite: 18]
+// Clock control registe                                                // Comment referring to Clock Control Register (CCR) with trailing typo[cite: 18]
+                                                                        // Blank line before macro definitions[cite: 18]
+#define CCR_BIT_CLKEN     0                                             // Define CCR clock enable bit position as 0[cite: 18]
+#define ILR_BIT_RTCCIF    0                                             // Define ILR counter increment interrupt flag bit position as 0[cite: 18]
+                                                                        // Trailing newline at end of file[cite: 18]
