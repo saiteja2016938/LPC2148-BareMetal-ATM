@@ -87,3 +87,36 @@ An embedded **Automated Teller Machine (ATM) Controller** built on the **LPC2148
 * **Withdrawal & Deposit Rules**: Must be non-zero and an exact multiple of `Rs.100`; withdrawals cannot exceed `balance`, and deposits guard against `u32` overflow[cite: 16].
 * **Transaction History Capacity**: Stores up to `MAX_HISTORY = 10` entries (`HISTORY_LENGTH = 32` chars each), evicting the oldest entry when full[cite: 16].
 * **Serial Output (`UART0`)**: Logs timestamps (`UARTDateTime`), login events, balance enquiries, withdrawals, deposits, PIN changes, and logout banners[cite: 16].
+
+
+
+
+
+## Project Visual Showcase
+
+### 1. Hardware Setup & Multi-Angle Views
+
+| Complete & Overview | Front / Keypad View | Top View | Side & Right Views |
+| :---: | :---: | :---: | :---: |
+| ![Complete Hardware](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/compleate_hardware.jpeg)<br>*Full ATM hardware assembly* | ![Hardware View with Keypad](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/hardware_view_with_kpm.jpeg)<br>*Board integrated with 4x4 keypad* | ![Hardware Top View](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/hardware_top_view.jpeg)<br>*Top view of wiring & connections* | ![Hardware Side View](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/hardware_side_view.jpeg)<br>*Side view of hardware setup* |
+| ![Hardware Image](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/hardware_img.jpeg)<br>*LPC2148 board & peripherals* | — | — | ![Hardware Right Side View](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/hardware_right_side_view.jpeg)<br>*Right-side view of hardware setup* |
+
+---
+
+### 2. LCD Screen & Transaction Flow
+
+| Step | Screen / State | Preview | Description |
+| :---: | :--- | :--- | :--- |
+| **1** | **Welcome Screen** | ![Welcome to ATM](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/welcom_to_atm.jpeg) | Initial ATM welcome prompt on LCD[cite: 16, 24] |
+| **2** | **Balance Enquiry** | ![Balance](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/balence.jpeg) | Account balance displayed on LCD[cite: 16, 24] |
+| **3** | **Amount Entered** | ![Amount Entered](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/amount_entered.jpeg) | Numeric amount entered via keypad on LCD[cite: 16, 24] |
+| **4a** | **Withdraw Success** | ![Withdraw Success](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/withdra_sucess.jpeg) | Cash withdrawal confirmation on LCD[cite: 16, 24] |
+| **4b** | **Deposit Success** | ![Deposit Success](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/deposit_sucess.jpeg) | Cash deposit confirmation on LCD[cite: 16, 24] |
+
+---
+
+### 3. UART0 Serial Output
+
+| Serial Log Output |
+| :---: |
+| ![Log Output Image 2](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/log_output_img_2.jpeg)<br>*UART0 serial terminal log output* |
