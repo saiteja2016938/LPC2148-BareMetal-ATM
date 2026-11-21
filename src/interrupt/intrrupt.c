@@ -1,55 +1,56 @@
-//intrrupt.c
-
-
-#include <LPC21xx.h>
-#include "types.h"
-#include "intrrupt.h"
-
-#define EINT3_VIC_CHN 17
-
-volatile u32 rtc_setup_requested = 0;
-void RTC_SetupMode(void);
-void eint3_isr(void) __irq;
-
-void InitEINT3(void)
-{
-    /* 1. Configure P0.20 as EINT3 */
-    PINSEL1 &= ~(3U << 8);
-    PINSEL1 |=  (3U << 8);
-
-    /* 2. Configure EINT3 as IRQ */
-    VICIntSelect &= ~(1U << EINT3_VIC_CHN);
-
-    /* 3. Enable EINT3 in VIC */
-    VICIntEnable = (1U << EINT3_VIC_CHN);
-
-    /* 4. Configure EINT3 as vectored IRQ in slot 0 */
-    VICVectCntl0 = (1U << 5) | EINT3_VIC_CHN;
-
-    /* 5. Load ISR address into vector slot 0 */
-    VICVectAddr0 = (u32)eint3_isr;
-
-    /* 6. Configure EINT3 for edge-triggered operation */
-    EXTMODE |= (1U << 3);
-
-    /* 7. Configure falling-edge trigger */
-    EXTPOLAR &= ~(1U << 3);
-
-    /* 8. Clear any pending EINT3 interrupt */
-    EXTINT = (1U << 3);
-}
-
-void eint3_isr(void) __irq
-{
-    /* Request RTC setup; handle it outside the ISR */
-  // rtc_setup_requested = 1;
- // CheckInterruptRequest();
-    RTC_SetupMode();
-
-    /* Clear EINT3 peripheral interrupt */
-    EXTINT = (1U << 3);
-
-    /* Acknowledge VIC */
-    VICVectAddr = 0;
-	
-}
+//intrrupt.c                                                                  // Source file name comment for LPC21xx external interrupt EINT3 handling[cite: 13]
+                                                                              // Blank line after file header comment[cite: 13]
+                                                                              // Blank line before header includes[cite: 13]
+#include <LPC21xx.h>                                                          // Include LPC21xx microcontroller SFR and peripheral register definitions[cite: 13]
+#include "types.h"                                                            // Include custom fixed-width integer type definitions (u32, etc.)[cite: 13]
+#include "intrrupt.h"                                                         // Include EINT3 interrupt declarations and shared flag prototype[cite: 13]
+                                                                              // Blank line separating includes from macro definition[cite: 13]
+#define EINT3_VIC_CHN 17                                                      // Define Vectored Interrupt Controller (VIC) channel number 17 for EINT3[cite: 13]
+                                                                              // Blank line separating macro from global variables/prototypes[cite: 13]
+volatile u32 rtc_setup_requested = 0;                                         // Declare volatile flag initialized to 0 to indicate RTC setup request[cite: 13]
+void RTC_SetupMode(void);                                                     // Forward declaration of RTC setup mode routine invoked on interrupt[cite: 13]
+void eint3_isr(void) __irq;                                                   // Forward declaration of ARM __irq interrupt handler for EINT3[cite: 13]
+                                                                              // Blank line separating declarations from InitEINT3 definition[cite: 13]
+void InitEINT3(void)                                                          // Define initialization routine for External Interrupt 3 (EINT3)[cite: 13]
+{                                                                             // Opening brace for InitEINT3 function body[cite: 13]
+    /* 1. Configure P0.20 as EINT3 */                                         // Step 1 comment: select EINT3 alternate pin function on P0.20[cite: 13]
+    PINSEL1 &= ~(3U << 8);                                                    // Clear bits [9:8] in PINSEL1 (controls P0.20 pin function)[cite: 13]
+    PINSEL1 |=  (3U << 8);                                                    // Set bits [9:8] to 11b in PINSEL1 to assign P0.20 as EINT3[cite: 13]
+                                                                              // Blank line separating step 1 and step 2[cite: 13]
+    /* 2. Configure EINT3 as IRQ */                                           // Step 2 comment: route EINT3 to normal IRQ rather than FIQ[cite: 13]
+    VICIntSelect &= ~(1U << EINT3_VIC_CHN);                                   // Clear bit 17 in VICIntSelect so EINT3 is handled as IRQ[cite: 13]
+                                                                              // Blank line separating step 2 and step 3[cite: 13]
+    /* 3. Enable EINT3 in VIC */                                              // Step 3 comment: enable EINT3 interrupt line in VIC[cite: 13]
+    VICIntEnable = (1U << EINT3_VIC_CHN);                                     // Write 1 to bit 17 of VICIntEnable to enable EINT3 interrupt[cite: 13]
+                                                                              // Blank line separating step 3 and step 4[cite: 13]
+    /* 4. Configure EINT3 as vectored IRQ in slot 0 */                        // Step 4 comment: assign EINT3 to VIC vectored slot 0[cite: 13]
+    VICVectCntl0 = (1U << 5) | EINT3_VIC_CHN;                                 // Enable slot 0 (bit 5 = 1) and set channel source to EINT3 (17)[cite: 13]
+                                                                              // Blank line separating step 4 and step 5[cite: 13]
+    /* 5. Load ISR address into vector slot 0 */                              // Step 5 comment: program ISR entry address into VICVectAddr0[cite: 13]
+    VICVectAddr0 = (u32)eint3_isr;                                            // Store address of eint3_isr cast to u32 in VIC vector slot 0[cite: 13]
+                                                                              // Blank line separating step 5 and step 6[cite: 13]
+    /* 6. Configure EINT3 for edge-triggered operation */                     // Step 6 comment: select edge sensitivity instead of level sensitivity[cite: 13]
+    EXTMODE |= (1U << 3);                                                     // Set bit 3 of EXTMODE to configure EINT3 as edge-sensitive[cite: 13]
+                                                                              // Blank line separating step 6 and step 7[cite: 13]
+    /* 7. Configure falling-edge trigger */                                     // Step 7 comment: select falling edge polarity for EINT3[cite: 13]
+    EXTPOLAR &= ~(1U << 3);                                                   // Clear bit 3 of EXTPOLAR so EINT3 triggers on falling edge[cite: 13]
+                                                                              // Blank line separating step 7 and step 8[cite: 13]
+    /* 8. Clear any pending EINT3 interrupt */                                // Step 8 comment: clear stale pending flag before enabling interrupts[cite: 13]
+    EXTINT = (1U << 3);                                                       // Write 1 to bit 3 of EXTINT to clear any pending EINT3 flag[cite: 13]
+}                                                                             // Closing brace for InitEINT3 function body[cite: 13]
+                                                                              // Blank line separating InitEINT3 from eint3_isr[cite: 13]
+void eint3_isr(void) __irq                                                    // Define ARM __irq interrupt service routine for EINT3[cite: 13]
+{                                                                             // Opening brace for eint3_isr function body[cite: 13]
+    /* Request RTC setup; handle it outside the ISR */                        // Comment describing intent to defer RTC setup outside ISR[cite: 13]
+  // rtc_setup_requested = 1;                                               // Commented-out statement that would set rtc_setup_requested flag[cite: 13]
+ // CheckInterruptRequest();                                                 // Commented-out call to CheckInterruptRequest helper function[cite: 13]
+    RTC_SetupMode();                                                          // Call RTC_SetupMode directly inside the EINT3 ISR[cite: 13]
+                                                                              // Blank line before clearing peripheral interrupt flag[cite: 13]
+    /* Clear EINT3 peripheral interrupt */                                    // Comment indicating EINT3 external interrupt flag is cleared[cite: 13]
+    EXTINT = (1U << 3);                                                       // Write 1 to bit 3 of EXTINT to clear EINT3 interrupt status[cite: 13]
+                                                                              // Blank line before acknowledging VIC[cite: 13]
+    /* Acknowledge VIC */                                                     // Comment indicating VIC end-of-interrupt write[cite: 13]
+    VICVectAddr = 0;                                                          // Write 0 to VICVectAddr to signal completion of IRQ to VIC[cite: 13]
+	                                                                          // Indented blank/whitespace line inside eint3_isr body[cite: 13]
+}                                                                             // Closing brace for eint3_isr function body[cite: 13]
+                                                                              // Trailing newline at end of source file[cite: 13]
