@@ -45,6 +45,8 @@ An embedded **Automated Teller Machine (ATM) Controller** built on the **LPC2148
 | **External Interrupt 3** | `P0.20` (`EINT3`)[cite: 13] | Falling-edge IRQ (VIC Ch 17)[cite: 13] | `PINSEL1`, `EXTMODE`, `EXTPOLAR`, `EXTINT`, `VIC*`[cite: 13] |
 | **UART0 Serial** | `TXD0` / `RXD0` (`P0.0`, `P0.1`)[cite: 19] | Serial TX / RX (`9600` baud)[cite: 11, 19] | `FOSC=12MHz`, `CCLK=60MHz`, `PCLK=15MHz`, `DIVISOR`[cite: 11] |
 
+
+![image alt](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/e225d9574893d1972e6e2e24af924101b331e230/docs/assets/lcd_img_1.png)
 ---
 
 ## 4. Keypad Controls & Key Map
