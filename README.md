@@ -33,13 +33,9 @@ An embedded **Automated Teller Machine (ATM) Controller** built on the **LPC2148
      v
 [ Buzzer (P0.5) ]  <-- 3 failed login attempts or low-balance alert
 
-[cite: 13, 14, 16, 17, 19]
-
----
-
 ## 2. ATM & RTC Workflow at a Glance
 
-<Image src="image_generation_content/666248498274513811" alt="ATM Application and RTC Interrupt Menu Flow Diagram" />
+![image alt](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0afb5c28dc464b4dea5937c6cabd1b75831ebef4/docs/ATM_WORK_FLOW.png)
 
 | Stage / Mode | Key Triggers & Rules | System Behavior |
 | :--- | :--- | :--- |
