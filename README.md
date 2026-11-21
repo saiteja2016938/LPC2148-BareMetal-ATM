@@ -3,7 +3,16 @@
 An embedded **Automated Teller Machine (ATM) Controller** built on the **LPC2148** microcontroller featuring a **16x2 character LCD**, **4x4 matrix keypad**, **Real-Time Clock (RTC)** with **EINT3 hardware interrupt** setup menus, **UART0** serial transaction/timestamp logging, **in-memory transaction history**, and **buzzer security alerts**[cite: 13, 14, 16, 17, 19].
 
 ---
+## 🎯 Objectives
 
+- Develop a bare-metal ATM simulator using the LPC2148 ARM7 microcontroller and Embedded C.
+- Implement PIN-based authentication and a menu-driven interface using a 4×4 matrix keypad.
+- Interface a 16×2 LCD for displaying menus, account information, and transaction status.
+- Implement basic ATM operations such as balance inquiry, cash withdrawal, deposit, PIN change, and transaction history.
+- Integrate the Real-Time Clock (RTC) to associate transaction records with date and time.
+- Use UART serial communication for transaction logging and debugging.
+- Understand peripheral interfacing, modular firmware design, interrupt handling, and hardware-level debugging.
+  
 ## 1. Visual System Architecture
 
 ![image alt](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/7170e27075920dbfda8938336832c2e8116c6a90/docs/ATM_BLOCK_DIAGRAM.png)
@@ -119,3 +128,28 @@ An embedded **Automated Teller Machine (ATM) Controller** built on the **LPC2148
 | Serial Log Output |
 | :---: |
 | ![Log Output Image 2](https://github.com/saiteja2016938/LPC2148-BareMetal-ATM/blob/0736bf49f3f06eadc865ddad2464cbd896909103/docs/assets/log_output_img_2.jpeg)<br>*UART0 serial terminal log output* |
+
+
+## 🛠️ Challenges Faced
+
+1. **Keypad Input Handling**
+   Handling keypad input across different screens required consistent key mapping and input handling. The keypad logic was refined to support navigation, digit entry, correction, confirmation, and cancellation during different operations.
+2. **RTC Time Formatting**
+   The RTC values were initially displayed without leading zeros. For example, an hour value of 8 appeared as 8 instead of 08. Display formatting was adjusted to maintain a consistent HH:MM:SS representation.
+3. **Interrupt Handling and Main-Loop Coordination**
+   Handling RTC-related events required understanding the difference between executing operations inside an interrupt service routine and using an interrupt flag to notify the main program. The approach was refined to keep interrupt handling short and perform the required processing in the main program.
+4. **Peripheral Integration**
+   Integrating the LCD, keypad, RTC, and UART into one application required coordinating input processing, display updates, transaction logic, and serial logging without disrupting the user interaction flow.
+
+---
+
+
+## 🚀 Future Enhancements
+
+- **Persistent account data**: Store account balance and PIN in non-volatile memory so data is retained after power loss or reset.
+- **Multiple user accounts**: Support multiple accounts with independent PINs and balances.
+- **Improved authentication**: Add retry limits, temporary lockout, and stronger PIN-change validation.
+- **Persistent transaction history**: Store transaction records in EEPROM or another non-volatile storage medium instead of retaining them only in RAM.
+- **Improved input validation**: Handle invalid inputs, boundary conditions, and unexpected keypad operations more robustly.
+- **Modular architecture**: Further separate authentication, account management, transaction processing, display handling, and peripheral drivers.
+- **Enhanced UART diagnostics**: Provide structured transaction logs and debugging information to simplify troubleshooting and firmware analysis.
